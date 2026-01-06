@@ -12,20 +12,25 @@ function App() {
   const [majorMinor, setMajorMinor] = useState("major");
   const [scaleType, setScaleType] = useState("diatonic");
 
-  const style = {
-    width: "50%",
-    margin: "0 auto",
-    marginTop: 150,
-  };
-
   return (
-    <div className="App">
-      <div style={style}>
-        <KeySelector value={selectedKey} onChange={setSelectedKey} />
-        <MajorMinor value={majorMinor} onChange={setMajorMinor} />
-        <Scale value={scaleType} onChange={setScaleType} />
-        <ChordList musicKey={selectedKey} scale={majorMinor} />
-        <Fretboard />
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-6xl mx-auto px-4">
+        {/* Selector Section */}
+        <div className="flex gap-4 mb-8">
+          <KeySelector value={selectedKey} onChange={setSelectedKey} />
+          <Scale value={scaleType} onChange={setScaleType} />
+          <MajorMinor value={majorMinor} onChange={setMajorMinor} />
+        </div>
+
+        {/* Chord List Section */}
+        <div className="mb-8">
+          <ChordList musicKey={selectedKey} scale={majorMinor} />
+        </div>
+
+        {/* Fretboard Section */}
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+          <Fretboard />
+        </div>
       </div>
     </div>
   );
