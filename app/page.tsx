@@ -1,11 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { KeySelector } from "@/components/features/KeySelector";
 import { MajorMinor, Scale } from "@/components/features/ScaleSelector";
-import { Fretboard } from "@/components/features/Fretborad";
 import { ChordList } from "@/components/features/ChordList";
-import "./globals.css";
+
+const Fretboard = dynamic(
+  () => import("@/components/features/Fretborad").then((m) => m.Fretboard),
+  { ssr: false },
+);
 
 function App() {
   const [selectedKey, setSelectedKey] = useState("C");
