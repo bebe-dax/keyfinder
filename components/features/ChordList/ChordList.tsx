@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Scale, Key } from "tonal";
+import { Key } from "tonal";
 
 interface ChordListProps {
   musicKey: string;
@@ -9,44 +8,38 @@ interface ChordListProps {
 }
 
 export const ChordList = ({ musicKey, scale }: ChordListProps) => {
-  const [chords, setChords] = useState<string[]>([]);
+  const chordData = scale === "major"
+    ? Key.majorKey(musicKey).chords
+    : Key.minorKey(musicKey).natural.chords;
+  const chords = [...chordData];
 
-  useEffect(() => {
-    let chordData: readonly string[];
-    if (scale === "major") {
-      chordData = Key.majorKey(musicKey).chords;
-    } else {
-      chordData = Key.minorKey(musicKey).natural.chords;
-    }
-    setChords([...chordData]);
-  }, [musicKey, scale]);
-
-  // コードの色分け（ダイアトニックコード）
-  const getChordColor = (index: number) => {
-    const colors = [
-      "bg-green-300", // I (トニック)
-      "bg-blue-300",  // II (サブドミナント)
-      "bg-green-300", // III (トニック)
-      "bg-blue-300",  // IV (サブドミナント)
-      "bg-red-300",   // V (ドミナント)
-      "bg-green-300", // VI (トニック)
-      "bg-blue-300",  // VII (サブドミナント/ディミニッシュ)
-    ];
-    return colors[index] || "bg-gray-300";
-  };
+  const chordInfo = [
+    { label: "トニック", color: "bg-green-300", textColor: "text-green-800" },
+    { label: "サブドミナント", color: "bg-blue-300", textColor: "text-blue-800" },
+    { label: "トニック", color: "bg-green-300", textColor: "text-green-800" },
+    { label: "サブドミナント", color: "bg-blue-300", textColor: "text-blue-800" },
+    { label: "ドミナント", color: "bg-red-300", textColor: "text-red-800" },
+    { label: "トニック", color: "bg-green-300", textColor: "text-green-800" },
+    { label: "サブドミナント", color: "bg-blue-300", textColor: "text-blue-800" },
+  ];
 
   return (
     <div className="space-y-4">
       {/* Chord Display */}
       <div className="flex gap-0 items-center justify-center">
-        {chords.map((chord, index) => (
-          <div
-            key={index}
-            className={`${getChordColor(index)} px-8 py-4 text-center font-bold text-xl border border-gray-400`}
-          >
-            {chord}
-          </div>
-        ))}
+        {chords.map((chord, index) => {
+          const info = chordInfo[index] ?? { label: "", color: "bg-gray-300", textColor: "text-gray-800" };
+          return (
+            <div key={index} className="flex flex-col">
+              <div className={`${info.color} ${info.textColor} px-8 py-1 text-center text-xs font-semibold border border-b-0 border-gray-400`}>
+                {info.label}
+              </div>
+              <div className={`${info.color} px-8 py-4 text-center font-bold text-xl border border-gray-400`}>
+                {chord}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
