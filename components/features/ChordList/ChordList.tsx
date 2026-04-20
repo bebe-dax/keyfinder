@@ -14,29 +14,29 @@ export const ChordList = ({ musicKey, scale }: ChordListProps) => {
   const chords = [...chordData];
 
   const chordInfo = [
-    { label: "トニック", color: "bg-green-300", textColor: "text-green-800" },
-    { label: "サブドミナント", color: "bg-blue-300", textColor: "text-blue-800" },
-    { label: "トニック", color: "bg-green-300", textColor: "text-green-800" },
-    { label: "サブドミナント", color: "bg-blue-300", textColor: "text-blue-800" },
-    { label: "ドミナント", color: "bg-red-300", textColor: "text-red-800" },
-    { label: "トニック", color: "bg-green-300", textColor: "text-green-800" },
-    { label: "サブドミナント", color: "bg-blue-300", textColor: "text-blue-800" },
+    { label: "トニック", color: "bg-green-100", textColor: "text-green-700", borderColor: "border-green-300" },
+    { label: "サブドミナント", color: "bg-blue-100", textColor: "text-blue-700", borderColor: "border-blue-300" },
+    { label: "トニック", color: "bg-green-100", textColor: "text-green-700", borderColor: "border-green-300" },
+    { label: "サブドミナント", color: "bg-blue-100", textColor: "text-blue-700", borderColor: "border-blue-300" },
+    { label: "ドミナント", color: "bg-rose-100", textColor: "text-rose-700", borderColor: "border-rose-300" },
+    { label: "トニック", color: "bg-green-100", textColor: "text-green-700", borderColor: "border-green-300" },
+    { label: "サブドミナント", color: "bg-blue-100", textColor: "text-blue-700", borderColor: "border-blue-300" },
   ];
 
   return (
     <div className="space-y-4">
       {/* Chord Display */}
-      <div className="flex gap-0 items-center justify-center">
+      <div className="flex gap-3 items-center justify-center flex-wrap">
         {chords.map((chord, index) => {
-          const info = chordInfo[index] ?? { label: "", color: "bg-gray-300", textColor: "text-gray-800" };
+          const info = chordInfo[index] ?? { label: "", color: "bg-gray-100", textColor: "text-gray-600", borderColor: "border-gray-300" };
           return (
-            <div key={index} className="flex flex-col">
-              <div className={`${info.color} ${info.textColor} px-8 py-1 text-center text-xs font-semibold border border-b-0 border-gray-400`}>
+            <div key={index} className={`${info.color} ${info.borderColor} rounded-2xl px-6 py-4 flex flex-col items-center gap-1 shadow-sm min-w-[80px] border`}>
+              <span className={`${info.textColor} text-xs font-medium opacity-80`}>
                 {info.label}
-              </div>
-              <div className={`${info.color} px-8 py-4 text-center font-bold text-xl border border-gray-400`}>
+              </span>
+              <span className={`${info.textColor} font-bold text-xl`}>
                 {chord}
-              </div>
+              </span>
             </div>
           );
         })}
