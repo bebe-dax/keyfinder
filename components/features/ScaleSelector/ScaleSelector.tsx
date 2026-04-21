@@ -32,7 +32,10 @@ interface ScaleProps {
 }
 
 export const Scale = ({ value, onChange }: ScaleProps) => {
-  const scale = [{ value: "diatonic", label: "ダイアトニック" }];
+  const scale = [
+    { value: "diatonic", label: "ダイアトニック" },
+    { value: "secondary", label: "セカンダリードミナント" },
+  ];
 
   return (
     <select

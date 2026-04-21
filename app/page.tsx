@@ -28,7 +28,7 @@ function App() {
 
         {/* Chord List Section */}
         <div className="mb-8">
-          <ChordList musicKey={selectedKey} scale={majorMinor} />
+          <ChordList musicKey={selectedKey} scale={majorMinor} theoryMode={scaleType} />
         </div>
 
         {/* Fretboard Section */}
