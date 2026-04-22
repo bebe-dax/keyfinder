@@ -2,11 +2,17 @@
 
 import React from "react";
 import Guitar from "react-guitar";
+import { getChordPosition } from "./chordPositions";
 
-export const Fretboard = () => {
+interface FretboardProps {
+  chord?: string;
+}
+
+export const Fretboard = ({ chord }: FretboardProps) => {
+  const strings = chord ? getChordPosition(chord) : [-1, -1, -1, -1, -1, -1];
   return (
     <div>
-      <Guitar strings={[0, 1, 2, 2, 0, -1]} />
+      <Guitar strings={strings} />
     </div>
   );
 };

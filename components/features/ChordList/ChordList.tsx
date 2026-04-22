@@ -6,6 +6,8 @@ interface ChordListProps {
   musicKey: string;
   scale: string;
   theoryMode: string;
+  selectedChord?: string;
+  onChordSelect?: (chord: string) => void;
 }
 
 const DIATONIC_INFO_MAJOR = [
@@ -30,7 +32,13 @@ const DIATONIC_INFO_MINOR = [
 
 const FALLBACK_INFO = { label: "", color: "bg-gray-100", textColor: "text-gray-600", borderColor: "border-gray-300" };
 
-export const ChordList = ({ musicKey, scale, theoryMode }: ChordListProps) => {
+function chordCardClass(base: string, border: string, selected: boolean) {
+  return `${base} ${border} rounded-2xl px-5 py-3 flex flex-col items-center gap-1 shadow-sm min-w-[80px] border cursor-pointer transition-all ${
+    selected ? "ring-2 ring-offset-1 ring-gray-500 scale-105" : "hover:scale-105"
+  }`;
+}
+
+export const ChordList = ({ musicKey, scale, theoryMode, selectedChord, onChordSelect }: ChordListProps) => {
   const keyData = scale === "major" ? Key.majorKey(musicKey) : Key.minorKey(musicKey).natural;
   const diatonicChords = [...keyData.chords];
   const secondaryDominants = [...keyData.secondaryDominants];
@@ -45,7 +53,10 @@ export const ChordList = ({ musicKey, scale, theoryMode }: ChordListProps) => {
           return (
             <div key={index} className="flex flex-col items-center gap-1">
               {secondary ? (
-                <div className="bg-amber-100 border border-amber-300 rounded-2xl px-5 py-3 flex flex-col items-center gap-1 shadow-sm min-w-[80px]">
+                <div
+                  onClick={() => onChordSelect?.(secondary)}
+                  className={chordCardClass("bg-amber-100", "border-amber-300", selectedChord === secondary)}
+                >
                   <span className="text-amber-700 text-xs font-medium opacity-80">V7/{index + 1}</span>
                   <span className="text-amber-700 font-bold text-xl">{secondary}</span>
                 </div>
@@ -53,7 +64,10 @@ export const ChordList = ({ musicKey, scale, theoryMode }: ChordListProps) => {
                 <div className="rounded-2xl px-5 py-3 min-w-[80px] h-[72px]" />
               )}
               <div className="text-gray-400 text-xs">↓</div>
-              <div className={`${info.color} ${info.borderColor} rounded-2xl px-5 py-3 flex flex-col items-center gap-1 shadow-sm min-w-[80px] border`}>
+              <div
+                onClick={() => onChordSelect?.(diatonic)}
+                className={chordCardClass(info.color, info.borderColor, selectedChord === diatonic)}
+              >
                 <span className={`${info.textColor} text-xs font-medium opacity-80`}>{info.label}</span>
                 <span className={`${info.textColor} font-bold text-xl`}>{diatonic}</span>
               </div>
@@ -71,7 +85,8 @@ export const ChordList = ({ musicKey, scale, theoryMode }: ChordListProps) => {
         return (
           <div
             key={index}
-            className={`${info.color} ${info.borderColor} rounded-2xl px-6 py-4 flex flex-col items-center gap-1 shadow-sm min-w-[80px] border`}
+            onClick={() => onChordSelect?.(chord)}
+            className={chordCardClass(info.color, info.borderColor, selectedChord === chord)}
           >
             <span className={`${info.textColor} text-xs font-medium opacity-80`}>{info.label}</span>
             <span className={`${info.textColor} font-bold text-xl`}>{chord}</span>
