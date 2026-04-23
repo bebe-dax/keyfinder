@@ -25,7 +25,7 @@ export const KeySelector = ({ value, onChange }: KeySelectorProps) => {
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="px-6 py-3 border-2 border-gray-300 rounded-lg bg-white text-lg font-medium hover:border-blue-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors cursor-pointer"
+      className="px-5 py-3 border border-gray-300 rounded-2xl bg-white text-base font-medium shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-colors cursor-pointer"
     >
       {keys.map((key) => (
         <option key={key} value={key}>
